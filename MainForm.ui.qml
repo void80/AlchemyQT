@@ -66,8 +66,8 @@ Item {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    model: myModel
-                    delegate: Text {text: "Animal: " + type + ", " + size }
+                    model: game.elements()
+                    delegate: Text {text: "Element: " + name }
 //                    model: ListModel {
 //                        ListElement {
 //                            name: "Grey"
@@ -107,9 +107,15 @@ Item {
 //                                anchors.verticalCenter: parent.verticalCenter
 //                            }
 //                            spacing: 10
-//                        }
-//                    }
+                    //                        }
+                    //                    }
                 }
+            }
+
+            Button {
+                id: button1
+                text: qsTr("Add")
+                Layout.fillWidth: true
             }
         }
     }

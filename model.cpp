@@ -1,55 +1,48 @@
 #include "model.h"
 
 
-QHash<int, QByteArray> AnimalModel::roleNames() const
+QHash<int, QByteArray> ElementModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
-    roles[TypeRole] = "type";
-    roles[SizeRole] = "size";
+    roles[NameRole] = "name";
     return roles;
 }
 
 
-Animal::Animal(const QString &type, const QString &size)
-    : m_type(type), m_size(size)
+Element::Element(const QString &name)
+    : m_name(name)
 {
 }
 
-QString Animal::type() const
-{
-    return m_type;
-}
-
-QString Animal::size() const
-{
-    return m_size;
-}
-
-AnimalModel::AnimalModel(QObject *parent)
+ElementModel::ElementModel(QObject *parent)
     : QAbstractListModel(parent)
 {
 }
 
-void AnimalModel::addAnimal(const Animal &animal)
+void ElementModel::addElement(const Element &animal)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    m_animals << animal;
+    m_elements << animal;
     endInsertRows();
 }
 
-int AnimalModel::rowCount(const QModelIndex & parent) const {
+int ElementModel::rowCount(const QModelIndex & parent) const {
     Q_UNUSED(parent);
-    return m_animals.count();
+    return m_elements.count();
 }
 
-QVariant AnimalModel::data(const QModelIndex & index, int role) const {
-    if (index.row() < 0 || index.row() >= m_animals.count())
+QVariant ElementModel::data(QModelIndex const &index, int role) const
+{
+    if(index.row() < 0 || index.row() >= m_elements.count())
+    {
         return QVariant();
+    }
 
-    const Animal &animal = m_animals[index.row()];
-    if (role == TypeRole)
-        return animal.type();
-    else if (role == SizeRole)
-        return animal.size();
+    const Element &animal = m_elements[index.row()];
+    if(role == NameRole)
+    {
+        return animal.name();
+    }
+
     return QVariant();
 }

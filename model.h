@@ -5,35 +5,31 @@
 #include <QAbstractListModel>
 #include <QStringList>
 
-class Animal
+class Element
 {
 public:
-    Animal(const QString &type, const QString &size);
-//![0]
+    Element(const QString &name);
 
-    QString type() const;
-    QString size() const;
+    QString name() const {return m_name;}
 
 private:
-    QString m_type;
-    QString m_size;
-//![1]
+    QString m_name;
+
 };
 
 
-class AnimalModel: public QAbstractListModel
+class ElementModel: public QAbstractListModel
 {
     Q_OBJECT
 public:
     enum AnimalRoles
     {
-        TypeRole = Qt::UserRole + 1,
-        SizeRole
+        NameRole = Qt::UserRole + 1
     };
 
-    AnimalModel(QObject *parent = 0);
+    ElementModel(QObject *parent = 0);
 
-    void addAnimal(const Animal &animal);
+    void addElement(const Element &animal);
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
@@ -42,7 +38,7 @@ public:
 protected:
     QHash<int, QByteArray> roleNames() const;
 private:
-    QList<Animal> m_animals;
+    QList<Element> m_elements;
 };
 
 
