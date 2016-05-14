@@ -3,6 +3,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 
 Item {
+    id: root
     width: 640
     height: 480
     property alias listView1: listView1
@@ -59,56 +60,70 @@ Item {
                 Layout.fillWidth: true
                 ListView {
                     id: listView1
-                    x: 0
-                    y: 0
-                    width: 110
-                    height: 160
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+
                     model: game.elements
-                    delegate: Text {text: "Element: " + name }
-//                    model: ListModel {
-//                        ListElement {
-//                            name: "Grey"
-//                            colorCode: "grey"
-//                        }
+//                    delegate: Text {text: "Element: " + name }
 
-//                        ListElement {
-//                            name: "Red"
-//                            colorCode: "red"
-//                        }
+                    property int dragItemIndex: -1
 
-//                        ListElement {
-//                            name: "Blue"
-//                            colorCode: "blue"
-//                        }
+                    delegate: Item {
+                        id: delegateItem
+                        width: parent.width
+                        height: 50
 
-//                        ListElement {
-//                            name: "Green"
-//                            colorCode: "green"
-//                        }
-//                    }
-//                    delegate: Item {
-//                        x: 5
-//                        width: 80
-//                        height: 40
-//                        Row {
-//                            id: row1
-//                            Rectangle {
-//                                width: 40
-//                                height: 40
-//                                color: colorCode
-//                            }
+                        Rectangle {
+                            id: dragRect
+                            width: parent.width
+                            height: 50
 
-//                            Text {
-//                                text: name
-//                                font.bold: true
-//                                anchors.verticalCenter: parent.verticalCenter
-//                            }
-//                            spacing: 10
-                    //                        }
-                    //                    }
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            anchors.verticalCenter: parent.verticalCenter
+                            color: "salmon"
+                            border.color: Qt.darker(color)
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "Element: " + name
+                            }
+
+                            MouseArea {
+                                id: mouseArea
+                                anchors.fill: parent
+                                drag.target: dragRect
+                                drag.onActiveChanged: {
+                                    if(mouseArea.drag.active)
+                                    {
+                                        listView1.dragItemIndex = index;
+                                    }
+                                    dragRect.Drag.drop();
+                                }
+                            }
+
+                            states: [
+                                State {
+                                    when: dragRect.Drag.active
+                                    ParentChange {
+                                        target: dragRect
+                                        parent: root
+                                    }
+
+                                    AnchorChanges {
+                                        target: dragRect
+                                        anchors.horizontalCenter: undefined
+                                        anchors.verticalCenter: undefined
+                                    }
+                                }
+                            ]
+
+                            Drag.active: mouseArea.drag.active
+                            Drag.hotSpot.x: dragRect.width / 2
+                            Drag.hotSpot.y: dragRect.height / 2
+                        }
+                    }
+
                 }
             }
 
