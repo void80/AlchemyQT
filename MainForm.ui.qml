@@ -66,7 +66,7 @@ Item {
                     Layout.fillHeight: true
                     Layout.fillWidth: true
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                    model: game.elements()
+                    model: game.elements
                     delegate: Text {text: "Element: " + name }
 //                    model: ListModel {
 //                        ListElement {
@@ -116,6 +116,10 @@ Item {
                 id: button1
                 text: qsTr("Add")
                 Layout.fillWidth: true
+                onClicked: {
+                    game.addElement();
+                    console.log("Called it");
+                }
             }
         }
     }
