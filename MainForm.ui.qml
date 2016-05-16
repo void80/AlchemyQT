@@ -2,13 +2,13 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Layouts 1.1
 
+
 Item {
     id: root
     width: 640
     height: 480
     property alias listView1: listView1
     property alias chkShowTerminal: chkShowTerminal
-
 
     RowLayout {
         id: rowLayout1
@@ -17,15 +17,6 @@ Item {
         anchors.leftMargin: 0
         anchors.topMargin: 0
         anchors.fill: parent
-
-        Rectangle {
-            id: rectangle1
-            width: 200
-            height: 200
-            color: "#ffffff"
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-        }
 
         ColumnLayout {
             id: columnLayout1
@@ -65,24 +56,22 @@ Item {
                     Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
 
                     model: game.elements
-//                    delegate: Text {text: "Element: " + name }
-
                     property int dragItemIndex: -1
 
-                    delegate: Item {
+                    delegate: Item { // TODO: reuse component
                         id: delegateItem
                         width: parent.width
                         height: 50
 
                         Rectangle {
                             id: dragRect
-                            width: parent.width
+                            width: 75
                             height: 50
 
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
-                            color: "salmon"
-                            border.color: Qt.darker(color)
+                            color: "grey"
+                            border.color: "darkGrey"
 
                             Text {
                                 anchors.centerIn: parent
@@ -92,38 +81,9 @@ Item {
                             MouseArea {
                                 id: mouseArea
                                 anchors.fill: parent
-                                drag.target: dragRect
-                                drag.onActiveChanged: {
-                                    if(mouseArea.drag.active)
-                                    {
-                                        listView1.dragItemIndex = index;
-                                    }
-                                    dragRect.Drag.drop();
-                                }
                             }
-
-                            states: [
-                                State {
-                                    when: dragRect.Drag.active
-                                    ParentChange {
-                                        target: dragRect
-                                        parent: root
-                                    }
-
-                                    AnchorChanges {
-                                        target: dragRect
-                                        anchors.horizontalCenter: undefined
-                                        anchors.verticalCenter: undefined
-                                    }
-                                }
-                            ]
-
-                            Drag.active: mouseArea.drag.active
-                            Drag.hotSpot.x: dragRect.width / 2
-                            Drag.hotSpot.y: dragRect.height / 2
                         }
                     }
-
                 }
             }
 
@@ -131,12 +91,41 @@ Item {
                 id: button1
                 text: qsTr("Add")
                 Layout.fillWidth: true
-                onClicked: {
-                    game.addElement();
-                    console.log("Called it");
+            }
+        }
+
+        ColumnLayout {
+            id: columnLayout2
+            width: 100
+            height: 100
+
+            ListView {
+                model: game.selectedElement
+                delegate: Item { // TODO: reuse component
+                    id: selected
+                    width: parent.width
+                    height: 50
+
+                    Rectangle {
+                        width: 75
+                        height: 50
+
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        color: "grey"
+                        border.color: "darkGrey"
+
+                        Text {
+                            anchors.centerIn: parent
+                            text: "Element: " + name
+                        }
+
+                        MouseArea {
+                            anchors.fill: parent
+                        }
+                    }
                 }
             }
         }
     }
-
 }

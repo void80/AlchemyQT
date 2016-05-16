@@ -11,6 +11,8 @@ Game::Game()
     m_elements.addElement(Element("Water"));
     m_elements.addElement(Element("Fire"));
     m_elements.addElement(Element("Earth"));
+
+    m_selectedElement.addElement(Element("Selected"));
 }
 
 void Game::addElement()
@@ -18,3 +20,4 @@ void Game::addElement()
     m_elements.addElement(Element("New Element"));
     std::cout << "Added Element" << std::endl;
 }
+
