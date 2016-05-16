@@ -19,6 +19,7 @@ public:
     ElementModel* elements() {return &m_elements;}
     ElementModel* selectedElement() {return &m_selectedElement;}
     Q_INVOKABLE void addElement();
+    Q_INVOKABLE void selectElement(int index);
 
 signals:
     void elementsChanged();

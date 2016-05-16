@@ -21,3 +21,16 @@ void Game::addElement()
     std::cout << "Added Element" << std::endl;
 }
 
+void Game::selectElement(int index)
+{
+    if(index > -1 && index < m_elements.size())
+    {
+        m_selectedElement.setOneElement(m_elements[index]);
+    }
+    else
+    {
+        m_selectedElement.clear();
+    }
+    std::cout << index << " has been clicked" << std::endl;
+}
+

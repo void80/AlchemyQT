@@ -81,6 +81,9 @@ Item {
                             MouseArea {
                                 id: mouseArea
                                 anchors.fill: parent
+                                onClicked: {
+                                    game.selectElement(index)
+                                }
                             }
                         }
                     }

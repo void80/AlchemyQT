@@ -29,11 +29,17 @@ public:
 
     ElementModel(QObject *parent = 0);
 
-    void addElement(const Element &animal);
+    void addElement(const Element &element);
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 
     QVariant data(const QModelIndex & index, int role = Qt::DisplayRole) const;
+
+    int size() const { return m_elements.size(); }
+    void setOneElement(Element const &element);
+    void clear();
+
+    Element const &operator[](int index) const {return m_elements[index];}
 
 protected:
     QHash<int, QByteArray> roleNames() const;

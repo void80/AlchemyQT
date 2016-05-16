@@ -46,3 +46,20 @@ QVariant ElementModel::data(QModelIndex const &index, int role) const
 
     return QVariant();
 }
+
+void ElementModel::setOneElement(const Element &element)
+{
+    // TODO: check if element is the same
+    clear();
+    addElement(element);
+}
+
+void ElementModel::clear()
+{
+    if(!m_elements.empty())
+    {
+        beginRemoveRows(QModelIndex(), 0, rowCount());
+        m_elements.clear();
+        endRemoveRows();
+    }
+}
