@@ -28,13 +28,17 @@ signals:
     void selectedElementChanged();
 
 private:
+    Element &getOrCreateElement(QString const &name);
+    void addOrCombineRecipe(Recipe const &recipe);
+
+private:
     ElementModel m_shownElements;
     ElementModel m_selectedElement;
 
     std::set<Element const *> m_knownElements;
 
     std::map<QString, Element> m_allElements;
-    std::list<Recipe> m_recipies;
+    std::set<Recipe, CompareUsingEducts> m_recipies;
 };
 
 #endif // GAME_H
