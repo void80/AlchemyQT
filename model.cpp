@@ -9,11 +9,6 @@ QHash<int, QByteArray> ElementModel::roleNames() const
 }
 
 
-Element::Element(const QString &name)
-    : m_name(name)
-{
-}
-
 ElementModel::ElementModel(QObject *parent)
     : QAbstractListModel(parent)
 {

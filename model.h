@@ -5,18 +5,8 @@
 #include <QAbstractListModel>
 #include <QStringList>
 
-class Element
-{
-public:
-    Element(const QString &name);
-
-    QString name() const {return m_name;}
-
-private:
-    QString m_name;
-
-};
-
+// PROJECT
+#include "element.h"
 
 class ElementModel: public QAbstractListModel
 {

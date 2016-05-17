@@ -6,7 +6,9 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     model.cpp \
-    game.cpp
+    game.cpp \
+    recipe.cpp \
+    element.cpp
 
 RESOURCES += qml.qrc
 
@@ -18,4 +20,6 @@ include(deployment.pri)
 
 HEADERS += \
     model.h \
-    game.h
+    game.h \
+    recipe.h \
+    element.h

@@ -7,25 +7,26 @@
 
 Game::Game()
 {
-    m_elements.addElement(Element("Air"));
-    m_elements.addElement(Element("Water"));
-    m_elements.addElement(Element("Fire"));
-    m_elements.addElement(Element("Earth"));
+
+    m_shownElements.addElement(Element("Air"));
+    m_shownElements.addElement(Element("Water"));
+    m_shownElements.addElement(Element("Fire"));
+    m_shownElements.addElement(Element("Earth"));
 
     m_selectedElement.addElement(Element("Selected"));
 }
 
 void Game::addElement()
 {
-    m_elements.addElement(Element("New Element"));
+    m_shownElements.addElement(Element("New Element"));
     std::cout << "Added Element" << std::endl;
 }
 
 void Game::selectElement(int index)
 {
-    if(index > -1 && index < m_elements.size())
+    if(index > -1 && index < m_shownElements.size())
     {
-        m_selectedElement.setOneElement(m_elements[index]);
+        m_selectedElement.setOneElement(m_shownElements[index]);
     }
     else
     {
@@ -34,3 +35,11 @@ void Game::selectElement(int index)
     std::cout << index << " has been clicked" << std::endl;
 }
 
+
+void Game::combineElement(int index)
+{
+    if(index > -1 && index < m_shownElements.size())
+    {
+
+    }
+}
