@@ -23,13 +23,14 @@ public:
     Q_INVOKABLE void selectElement(int index);
     Q_INVOKABLE void combineElement(int index);
 
+    std::list<Recipe>::iterator findRecipe(Element &firstEduct, Element &secondEduct);
 signals:
     void elementsChanged();
     void selectedElementChanged();
 
 private:
     Element &getOrCreateElement(QString const &name);
-    void addOrCombineRecipe(Recipe const &recipe);
+    void addOrCombineRecipe(Element &firstEduct, Element &secondEduct, Element *product);
 
 private:
     ElementModel m_shownElements;
@@ -38,7 +39,7 @@ private:
     std::set<Element const *> m_knownElements;
 
     std::map<QString, Element> m_allElements;
-    std::set<Recipe, CompareUsingEducts> m_recipies;
+    std::list<Recipe> m_recipies;
 };
 
 #endif // GAME_H

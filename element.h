@@ -30,4 +30,9 @@ private:
 
 };
 
+inline bool operator==(Element const &lhs, Element const &rhs)
+{
+    return lhs.name() == rhs.name();
+}
+
 #endif // ELEMENT_H

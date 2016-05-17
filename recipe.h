@@ -13,10 +13,6 @@ class Recipe
 {
 public:
     Recipe(Element &firstEduct, Element &secondEduct, Element *product);
-    ~Recipe();
-
-    operator // need rule of 3 (4)
-
 
 public:
     void addProduct(Element *product);
@@ -30,11 +26,7 @@ private:
     std::vector<Element *> m_products;
 };
 
-class CompareUsingEducts
-{
-public:
-    bool operator()(Recipe const &lhs, Recipe const &rhs);
-};
-
+bool hasSameEducts(const Recipe &lhs, Element const &firstEduct, Element const &secondEduct);
+bool haveSameEducts(const Recipe &lhs, const Recipe &rhs);
 
 #endif // RECIPE_H

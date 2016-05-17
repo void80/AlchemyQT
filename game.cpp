@@ -11,7 +11,7 @@
 
 Game::Game()
 {
-    QFile inputFile(":/input.txt");
+    QFile inputFile(":/recipies.txt");
     inputFile.open(QIODevice::ReadOnly);
 
     QTextStream in(&inputFile);
@@ -31,15 +31,26 @@ Game::Game()
             if(formulaSplit.size() == 2)
             {
                 Element &product = getOrCreateElement(formulaSplit[0]);
+                if(isKnown)
+                {
+                    m_knownElements.insert(&product);
+                }
                 QStringList recipies = formulaSplit[1].split(", ");
                 for(auto &recipe: recipies)
                 {
                     QStringList eductSplit = recipe.split(" + ");
                     if(eductSplit.size() == 2)
                     {
-                        Recipe newRecipe(getOrCreateElement(eductSplit[0]), getOrCreateElement(eductSplit[1]), &product);
-                        addOrCombineRecipe(newRecipe);
+                        addOrCombineRecipe(getOrCreateElement(eductSplit[0]), getOrCreateElement(eductSplit[1]), &product);
                     }
+                }
+            }
+            else if(formulaSplit.size() == 1)
+            {
+                Element &product = getOrCreateElement(formulaSplit[0]);
+                if(isKnown)
+                {
+                    m_knownElements.insert(&product);
                 }
             }
         }
@@ -85,21 +96,36 @@ Element &Game::getOrCreateElement(const QString &name)
 {
     if(m_allElements.find(name) == m_allElements.end())
     {
-        m_allElements.emplace(name, Element(name))
+        m_allElements.emplace(name, Element(name));
     }
 
-    return m_allElements[name];
+    return m_allElements.at(name);
 }
 
-void Game::addOrCombineRecipe(Recipe recipe) // TODO: rvalue ref?
+std::list<Recipe>::iterator Game::findRecipe(Element &firstEduct, Element &secondEduct)
 {
-    auto oldRecipe = m_recipies.find(recipe);
+    for(auto oldCandidate = m_recipies.begin(); oldCandidate != m_recipies.end(); ++oldCandidate)
+    {
+        if(hasSameEducts(*oldCandidate, firstEduct, secondEduct))
+        {
+            return oldCandidate;
+        }
+    }
+
+    return  m_recipies.end();
+}
+
+void Game::addOrCombineRecipe(Element &firstEduct, Element &secondEduct, Element *product)
+{
+    auto oldRecipe = findRecipe(firstEduct, secondEduct);
 
     if(oldRecipe != m_recipies.end())
     {
-        recipe.combine(*oldRecipe);
-        m_recipies.erase(oldRecipe);
+        oldRecipe->addProduct(product);
+    }
+    else
+    {
+        m_recipies.emplace_back(firstEduct, secondEduct, product);
     }
 
-    m_recipies.insert(recipe);
 }

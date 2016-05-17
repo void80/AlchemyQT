@@ -32,30 +32,16 @@ Element const &Recipe::secondEduct() const
 }
 
 
-
-bool CompareUsingEducts::operator()(const Recipe &lhs, const Recipe &rhs)
+bool haveSameEducts(const Recipe &lhs, const Recipe &rhs)
 {
-    auto lhsFirst = &lhs.firstEduct();
-    auto lhsSecond = &lhs.secondEduct();
-    if(lhsSecond < lhsFirst)
-    {
-        std::swap(lhsFirst, lhsSecond);
-    }
-
-    auto rhsFirst = &rhs.firstEduct();
-    auto rhsSecond = &rhs.secondEduct();
-    if(rhsSecond < rhsFirst)
-    {
-        std::swap(rhsFirst, rhsSecond);
-    }
+    return hasSameEducts(lhs, rhs.firstEduct(), rhs.secondEduct());
+}
 
 
-    if(lhsFirst != rhsFirst)
-    {
-        return lhsFirst < rhsFirst;
-    }
-    else
-    {
-        return lhsSecond < rhsSecond;
-    }
+bool hasSameEducts(const Recipe &lhs, Element const &firstEduct, Element const &secondEduct)
+{
+    return
+        (lhs.firstEduct() == firstEduct && lhs.secondEduct() == secondEduct)
+    ||  (lhs.firstEduct() == secondEduct && lhs.secondEduct() == firstEduct)
+    ;
 }
