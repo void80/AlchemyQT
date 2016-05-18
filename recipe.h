@@ -17,8 +17,9 @@ public:
 public:
     void addProduct(Element *product);
 
-    Element const &firstEduct() const;
-    Element const &secondEduct() const;
+    Element const &firstEduct() const {return m_firstEduct;}
+    Element const &secondEduct() const {return m_secondEduct;}
+    std::vector<Element *> const &products() const {return m_products;}
 
 private:
     Element &m_firstEduct;

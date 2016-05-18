@@ -75,14 +75,22 @@ Item {
 
                             Text {
                                 anchors.centerIn: parent
-                                text: "Element: " + name
+                                text: name
                             }
 
                             MouseArea {
                                 id: mouseArea
                                 anchors.fill: parent
+                                acceptedButtons: Qt.LeftButton | Qt.RightButton
                                 onClicked: {
-                                    game.selectElement(index)
+                                    if(mouse.button & Qt.LeftButton)
+                                    {
+                                        game.selectElement(index);
+                                    }
+                                    else if(mouse.button & Qt.RightButton)
+                                    {
+                                        game.combineElement(index);
+                                    }
                                 }
                             }
                         }

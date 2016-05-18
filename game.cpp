@@ -64,13 +64,15 @@ void Game::selectElement(int index)
 {
     if(index > -1 && index < m_shownElements.size())
     {
-        m_selectedElement.setOneElement(m_shownElements[index]);
+        m_shownSelectedElement.setOneElement(m_shownElements[index]);
+        m_selectedElement = m_shownElements[index];
     }
     else
     {
-        m_selectedElement.clear();
+        m_shownSelectedElement.clear();
+        m_selectedElement = nullptr;
     }
-    std::cout << index << " has been clicked" << std::endl;
+    std::cout << index << " has been left clicked" << std::endl;
 }
 
 
@@ -78,8 +80,35 @@ void Game::combineElement(int index)
 {
     if(index > -1 && index < m_shownElements.size())
     {
+        auto clickedElement = m_shownElements[index];
+        if(m_selectedElement != nullptr)
+        {
+            // TODO: only search in attached recipies of the element
+            auto recipe = findRecipe(*clickedElement, *m_selectedElement);
 
+            if(recipe != m_recipies.end())
+            {
+                bool changed = false;
+                QString productText = "";
+                for(auto product: recipe->products())
+                {
+                    changed |= m_knownElements.insert(product).second;
+                    productText += product->name() + ", ";
+                }
+
+                if(changed)
+                {
+                    updateShownElements();
+                }
+                std::cout << m_selectedElement->name().toStdString() << " + " << clickedElement->name().toStdString() << " --> " << productText.toStdString() << std::endl;
+            }
+            else
+            {
+                std::cout << m_selectedElement->name().toStdString() << " + " << clickedElement->name().toStdString() << " --> no reaction" << std::endl;
+            }
+        }
     }
+    std::cout << index << " has been right clicked" << std::endl;
 }
 
 Element &Game::getOrCreateElement(const QString &name)
@@ -92,7 +121,7 @@ Element &Game::getOrCreateElement(const QString &name)
     return m_allElements.at(name);
 }
 
-std::list<Recipe>::iterator Game::findRecipe(Element &firstEduct, Element &secondEduct)
+std::list<Recipe>::iterator Game::findRecipe(Element const &firstEduct, Element const &secondEduct)
 {
     for(auto oldCandidate = m_recipies.begin(); oldCandidate != m_recipies.end(); ++oldCandidate)
     {

@@ -18,11 +18,11 @@ public:
 
 public:
     ElementModel* elements() {return &m_shownElements;}
-    ElementModel* selectedElement() {return &m_selectedElement;}
+    ElementModel* selectedElement() {return &m_shownSelectedElement;}
     Q_INVOKABLE void selectElement(int index);
     Q_INVOKABLE void combineElement(int index);
 
-    std::list<Recipe>::iterator findRecipe(Element &firstEduct, Element &secondEduct);
+    std::list<Recipe>::iterator findRecipe(Element const &firstEduct, Element const &secondEduct);
 signals:
     void elementsChanged();
     void selectedElementChanged();
@@ -34,8 +34,9 @@ private:
 
 private:
     ElementModel m_shownElements;
-    ElementModel m_selectedElement;
+    ElementModel m_shownSelectedElement;
 
+    Element const *m_selectedElement;
     std::set<Element const *> m_knownElements;
 
     std::map<QString, Element> m_allElements;

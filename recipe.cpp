@@ -21,17 +21,6 @@ void Recipe::addProduct(Element *product)
     product->addAsProduct(this);
 }
 
-Element const &Recipe::firstEduct() const
-{
-    return m_firstEduct;
-}
-
-Element const &Recipe::secondEduct() const
-{
-    return m_secondEduct;
-}
-
-
 bool haveSameEducts(const Recipe &lhs, const Recipe &rhs)
 {
     return hasSameEducts(lhs, rhs.firstEduct(), rhs.secondEduct());
