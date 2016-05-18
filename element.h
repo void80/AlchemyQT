@@ -22,6 +22,8 @@ public:
     void addAsEduct(Recipe const *recipe);
     void addAsProduct(Recipe const *recipe);
 
+    std::set<const Recipe *> const &asEduct() const {return m_asEduct;}
+
 private:
     QString m_name;
 

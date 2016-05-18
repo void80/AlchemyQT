@@ -28,6 +28,9 @@ Item {
                 id: chkShowTerminal
                 text: qsTr("Zeige Terminale")
                 checked: true
+                onCheckedChanged: {
+                    game.setShowTerminal(checked);
+                }
             }
 
             CheckBox {
@@ -44,6 +47,9 @@ Item {
                 text: qsTr("jetzt nicht kombinierbar")
                 clip: false
                 checked: true
+                onCheckedChanged: {
+                    game.setShowCurrentlyFinished(checked);
+                }
             }
 
             ScrollView {

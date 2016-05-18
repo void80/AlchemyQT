@@ -22,6 +22,9 @@ public:
     Q_INVOKABLE void selectElement(int index);
     Q_INVOKABLE void combineElement(int index);
 
+    Q_INVOKABLE void setShowTerminal(bool value);
+    Q_INVOKABLE void setShowCurrentlyFinished(bool value);
+
     std::list<Recipe>::iterator findRecipe(Element const &firstEduct, Element const &secondEduct);
 signals:
     void elementsChanged();
@@ -32,6 +35,8 @@ private:
     void addOrCombineRecipe(Element &firstEduct, Element &secondEduct, Element *product);
     void updateShownElements();
 
+    bool shouldBeShown(Element const *element) const;
+    bool isKnown(Element const *element) const;
 private:
     ElementModel m_shownElements;
     ElementModel m_shownSelectedElement;
@@ -41,6 +46,8 @@ private:
 
     std::map<QString, Element> m_allElements;
     std::list<Recipe> m_recipies;
+
+    bool m_showCurrentlyFinished;
 };
 
 #endif // GAME_H

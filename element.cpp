@@ -17,3 +17,4 @@ void Element::addAsProduct(const Recipe *recipe)
 {
     m_asProduct.insert(recipe);
 }
+

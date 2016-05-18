@@ -10,6 +10,7 @@
 #include "game.h"
 
 Game::Game()
+    : m_showCurrentlyFinished(true)
 {
     QFile inputFile(":/recipies.txt");
     inputFile.open(QIODevice::ReadOnly);
@@ -111,6 +112,20 @@ void Game::combineElement(int index)
     std::cout << index << " has been right clicked" << std::endl;
 }
 
+void Game::setShowTerminal(bool value)
+{
+    std::cout << "Show Terminal is now: " << value << std::endl;
+}
+
+void Game::setShowCurrentlyFinished(bool value)
+{
+    if(m_showCurrentlyFinished != value)
+    {
+        m_showCurrentlyFinished = value;
+        updateShownElements();
+    }
+}
+
 Element &Game::getOrCreateElement(const QString &name)
 {
     if(m_allElements.find(name) == m_allElements.end())
@@ -154,6 +169,39 @@ void Game::updateShownElements()
     m_shownElements.clear();
     for(auto &element: m_knownElements)
     {
-        m_shownElements.addElement(element);
+        if(shouldBeShown(element))
+        {
+            m_shownElements.addElement(element);
+        }
     }
 }
+
+bool Game::shouldBeShown(Element const *element) const
+{
+    if(!m_showCurrentlyFinished)
+    {
+        for(Recipe const* recipe: element->asEduct())
+        {
+            if(isKnown(&recipe->firstEduct()) && isKnown(&recipe->secondEduct()))
+            {
+                // recipe can be currently crafted
+                for(Element const* product: recipe->products())
+                {
+                    if(!isKnown(product))
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    return true;
+}
+
+bool Game::isKnown(Element const *element) const
+{
+    return m_knownElements.find(element) != m_knownElements.end();
+}
+
