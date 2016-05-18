@@ -56,19 +56,9 @@ Game::Game()
         }
     }
 
-    m_shownElements.addElement(Element("Air"));
-    m_shownElements.addElement(Element("Water"));
-    m_shownElements.addElement(Element("Fire"));
-    m_shownElements.addElement(Element("Earth"));
-
-    m_selectedElement.addElement(Element("Selected"));
+    updateShownElements();
 }
 
-void Game::addElement()
-{
-    m_shownElements.addElement(Element("New Element"));
-    std::cout << "Added Element" << std::endl;
-}
 
 void Game::selectElement(int index)
 {
@@ -128,4 +118,13 @@ void Game::addOrCombineRecipe(Element &firstEduct, Element &secondEduct, Element
         m_recipies.emplace_back(firstEduct, secondEduct, product);
     }
 
+}
+
+void Game::updateShownElements()
+{
+    m_shownElements.clear();
+    for(auto &element: m_knownElements)
+    {
+        m_shownElements.addElement(element);
+    }
 }

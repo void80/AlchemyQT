@@ -19,7 +19,6 @@ public:
 public:
     ElementModel* elements() {return &m_shownElements;}
     ElementModel* selectedElement() {return &m_selectedElement;}
-    Q_INVOKABLE void addElement();
     Q_INVOKABLE void selectElement(int index);
     Q_INVOKABLE void combineElement(int index);
 
@@ -31,6 +30,7 @@ signals:
 private:
     Element &getOrCreateElement(QString const &name);
     void addOrCombineRecipe(Element &firstEduct, Element &secondEduct, Element *product);
+    void updateShownElements();
 
 private:
     ElementModel m_shownElements;

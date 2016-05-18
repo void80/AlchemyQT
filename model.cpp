@@ -14,7 +14,7 @@ ElementModel::ElementModel(QObject *parent)
 {
 }
 
-void ElementModel::addElement(const Element &animal)
+void ElementModel::addElement(Element const *animal)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     m_elements << animal;
@@ -33,16 +33,16 @@ QVariant ElementModel::data(QModelIndex const &index, int role) const
         return QVariant();
     }
 
-    const Element &animal = m_elements[index.row()];
+    Element const *element = m_elements[index.row()];
     if(role == NameRole)
     {
-        return animal.name();
+        return element->name();
     }
 
     return QVariant();
 }
 
-void ElementModel::setOneElement(const Element &element)
+void ElementModel::setOneElement(Element const *element)
 {
     // TODO: check if element is the same
     clear();
