@@ -81,6 +81,7 @@ void Game::combineElement(int index)
 {
     if(index > -1 && index < m_shownElements.size())
     {
+        m_shownLastResults.clear();
         auto clickedElement = m_shownElements[index];
         if(m_selectedElement != nullptr)
         {
@@ -95,6 +96,7 @@ void Game::combineElement(int index)
                 {
                     changed |= m_knownElements.insert(product).second;
                     productText += product->name() + ", ";
+                    m_shownLastResults.addElement(product);
                 }
 
                 if(changed)

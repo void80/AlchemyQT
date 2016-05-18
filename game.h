@@ -13,12 +13,14 @@ class Game : public QObject
     Q_OBJECT
     Q_PROPERTY(ElementModel* elements READ elements NOTIFY elementsChanged)
     Q_PROPERTY(ElementModel* selectedElement READ selectedElement NOTIFY selectedElementChanged)
+    Q_PROPERTY(ElementModel* lastResults READ lastResults NOTIFY lastResultsChanged)
 public:
     Game();
 
 public:
     ElementModel* elements() {return &m_shownElements;}
     ElementModel* selectedElement() {return &m_shownSelectedElement;}
+    ElementModel* lastResults() {return &m_shownLastResults;}
     Q_INVOKABLE void selectElement(int index);
     Q_INVOKABLE void combineElement(int index);
 
@@ -29,6 +31,7 @@ public:
 signals:
     void elementsChanged();
     void selectedElementChanged();
+    void lastResultsChanged();
 
 private:
     Element &getOrCreateElement(QString const &name);
@@ -40,6 +43,7 @@ private:
 private:
     ElementModel m_shownElements;
     ElementModel m_shownSelectedElement;
+    ElementModel m_shownLastResults;
 
     Element const *m_selectedElement;
     std::set<Element const *> m_knownElements;

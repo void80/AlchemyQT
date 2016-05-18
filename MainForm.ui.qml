@@ -115,11 +115,46 @@ Item {
             id: columnLayout2
             width: 100
             height: 100
+            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+
+//            ListView {
+//                id: selectedElements
+//                model: game.selectedElement
+//                delegate: Item { // TODO: reuse component
+//                    id: selected
+//                    width: parent.width
+//                    height: 50
+
+//                    Rectangle {
+//                        width: 75
+//                        height: 50
+
+//                        anchors.horizontalCenter: parent.horizontalCenter
+//                        anchors.verticalCenter: parent.verticalCenter
+//                        color: "grey"
+//                        border.color: "darkGrey"
+
+//                        Text {
+//                            anchors.centerIn: parent
+//                            text: "Element: " + name
+//                        }
+
+//                        MouseArea {
+//                            anchors.fill: parent
+//                        }
+//                    }
+//                }
+//            }
+
+            Label {
+                id: lblLastResults
+                text: "last results"
+            }
 
             ListView {
-                model: game.selectedElement
+                id: lstLastResults
+                model: game.lastResults
                 delegate: Item { // TODO: reuse component
-                    id: selected
                     width: parent.width
                     height: 50
 
