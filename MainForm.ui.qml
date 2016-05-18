@@ -67,12 +67,12 @@ Item {
                     delegate: Item { // TODO: reuse component
                         id: delegateItem
                         width: parent.width
-                        height: 50
+                        height: 25
 
                         Rectangle {
                             id: dragRect
                             width: 75
-                            height: 50
+                            height: 25
 
                             anchors.horizontalCenter: parent.horizontalCenter
                             anchors.verticalCenter: parent.verticalCenter
